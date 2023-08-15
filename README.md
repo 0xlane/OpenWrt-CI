@@ -13,11 +13,9 @@ https://github.com/immortalwrt/immortalwrt
 
 固件信息里的时间为编译开始的时间，方便核对上游源码提交时间。
 
-Rockchip系列，包含R2C R2S R4S R5C R5S R6C R6S R66S R68S H66K H68K H69K PANTHER_X2
+X64系列，包含X64、X86。
 
-Mediatek系列，包含JCG_Q30 NX30-PRO GL-MT3000 QIHOO_360T7 CETRON_CT3003 LC-HX3001 MI-ROUTER-WR30U REDMI-ROUTER-AX6000
-
-X64系列，包含X64、X86
+Redmi-AX6因无线驱动问题，暂时维持源码版本在20230501。
 
 # 目录简要说明：
 
@@ -31,4 +29,4 @@ Config——自定义配置
 
   -- General.txt 为通用配置文件，用于设定各平台都用得到的插件。
 
-  -- Rockchip.txt Mediatek.txt X64.txt 为各平台主要配置文件，用于设定机型及额外插件。
+  -- 其它 txt 为各平台主要配置文件，用于设定机型及额外插件。

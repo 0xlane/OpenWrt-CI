@@ -79,6 +79,20 @@ jobs:
       - name: Clone OWRT Code
         run: |
           git clone --depth=1 --single-branch $OWRT_URL ./owrt
+      
+      - name: Fix AX6
+        if: github.event.inputs.OWRT_TARGET == 'Redmi-AX6'
+        run: |
+          cd ./owrt
+          # 因AX6无线驱动问题，暂时维持源码版本在20230501
+          git reset --hard 26f3634631244eedfbdfd61ea6cc3a2d7f5d896f
+          # Patch
+          cp -rf $GITHUB_WORKSPACE/general/AX6/target/linux/ipq807x/image/generic.mk openwrt/target/linux/ipq807x/image/
+
+      - name: Load custom feeds
+        run: |
+          cd ./owrt
+          echo 'src-git fichenx https://github.com/fichenx/openwrt-package' >> feeds.conf.default
 
       - name: Update Feeds
         run: |
