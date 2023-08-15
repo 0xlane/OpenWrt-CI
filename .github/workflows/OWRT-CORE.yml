@@ -79,9 +79,7 @@ jobs:
       - name: Clone OWRT Code
         run: |
           git clone --depth=1 --single-branch $OWRT_URL ./owrt
-      
-      - name: Fix AX6
-        run: |
+
           if [ "$OWRT_TARGET" == "Redmi-AX6" ]; then
             cd ./owrt
             # 因AX6无线驱动问题，暂时维持源码版本在20230501
@@ -92,6 +90,10 @@ jobs:
           else
             echo 'Fix AX6 Skip!'
           fi
+      
+      - name: Output file list
+        run: |
+          ls -alh ./owrt
 
       - name: Load custom feeds
         run: |
