@@ -17,6 +17,8 @@ X64系列，包含X64、X86。
 
 Redmi-AX6因无线驱动问题，暂时维持源码版本在20230501。
 
+固件在默认组件的基础上增加了 OpenClash、OpenVPN、iStore、QuickStart、DDNS、turboacc、v2ray-server，去除了我用不到的 smaba、zerotier、ipsec、adbyby-plus、accesscontrol、vsftpd 组件。
+
 # 目录简要说明：
 
 Depends.txt——环境依赖列表
