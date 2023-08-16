@@ -19,7 +19,9 @@ Redmi-AX6因无线驱动问题，暂时维持源码版本在20230501，内核版
 
 固件内置 OpenClash、Wiregaurd、OpenVPN、iStore、QuickStart、DDNS、turboacc、v2ray-server 和其它一些默认组件，去除了我用不到的 smaba、zerotier、ipsec、adbyby-plus、accesscontrol、vsftpd 组件。Docker 组件只内置在 X64 固件中。
 
-默认主题：Design (mode: light)
+默认 IP：192.168.31.1，一般最后一个网卡是 wan 口，其它是 lan 口。
+
+默认主题：Design (mode: light)，界面截图：
 
 ![](./assets/Snipaste_2023-08-16_08-48-39.png)
 
