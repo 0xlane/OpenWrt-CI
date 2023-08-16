@@ -13,11 +13,21 @@ https://github.com/immortalwrt/immortalwrt
 
 固件信息里的时间为编译开始的时间，方便核对上游源码提交时间。
 
-X64系列，包含X64、X86。
+X64系列，包含X64、X86，内核保持最新。
 
-Redmi-AX6因无线驱动问题，暂时维持源码版本在20230501。
+Redmi-AX6因无线驱动问题，暂时维持源码版本在20230501，内核版本固定5.10。
 
-固件在默认组件的基础上增加了 OpenClash、OpenVPN、iStore、QuickStart、DDNS、turboacc、v2ray-server，去除了我用不到的 smaba、zerotier、ipsec、adbyby-plus、accesscontrol、vsftpd 组件。
+固件内置 OpenClash、Wiregaurd、OpenVPN、iStore、QuickStart、DDNS、turboacc、v2ray-server 和其它一些默认组件，去除了我用不到的 smaba、zerotier、ipsec、adbyby-plus、accesscontrol、vsftpd 组件。Docker 组件只内置在 X64 固件中。
+
+默认主题：Design (mode: light)
+
+![](./assets/Snipaste_2023-08-16_08-48-39.png)
+
+![](./assets/Snipaste_2023-08-16_08-50-07.png)
+
+![](./assets/Snipaste_2023-08-16_08-53-29.png)
+
+![](./assets/Snipaste_2023-08-16_08-54-08.png)
 
 # 目录简要说明：
 
