@@ -96,7 +96,7 @@ jobs:
       - name: Load custom feeds
         run: |
           cd ./owrt
-          echo 'src-git fichenx https://github.com/fichenx/openwrt-package' >> feeds.conf.default
+          echo 'src-git smpackage https://github.com/kenzok8/small-package' >> feeds.conf.default
 
       - name: Update Feeds
         run: |
