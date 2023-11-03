@@ -34,7 +34,7 @@ CONFIG_PACKAGE_wpad-openssl=y
 CONFIG_DRIVER_11AC_SUPPORT=y
 CONFIG_DRIVER_11AX_SUPPORT=y
 #额外组件
-CONFIG_PACKAGE_openvpn-easy-rsa=y
+#CONFIG_PACKAGE_openvpn-easy-rsa=y
 CONFIG_OPENVPN_openssl_ENABLE_LZO=y
 CONFIG_OPENVPN_openssl_ENABLE_LZ4=y
 CONFIG_OPENVPN_openssl_ENABLE_FRAGMENT=y
@@ -44,8 +44,8 @@ CONFIG_OPENVPN_openssl_ENABLE_DEF_AUTH=y
 CONFIG_OPENVPN_openssl_ENABLE_PF=y
 CONFIG_OPENVPN_openssl_ENABLE_SMALL=y
 #额外插件
-CONFIG_PACKAGE_luci-app-store=y
-CONFIG_PACKAGE_luci-app-istorex=y
-CONFIG_PACKAGE_luci-app-quickstart=y
-CONFIG_PACKAGE_luci-app-wireguard=y
-CONFIG_PACKAGE_luci-app-openvpn-server=y
+#CONFIG_PACKAGE_luci-app-store=y
+#CONFIG_PACKAGE_luci-app-istorex=y
+#CONFIG_PACKAGE_luci-app-quickstart=y
+#CONFIG_PACKAGE_luci-app-wireguard=y
+#CONFIG_PACKAGE_luci-app-openvpn-server=y
