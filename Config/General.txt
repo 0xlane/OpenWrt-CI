@@ -19,6 +19,8 @@ CONFIG_PACKAGE_unzip=y
 CONFIG_PACKAGE_coreutils=y
 CONFIG_PACKAGE_coreutils-sort=y
 CONFIG_PACKAGE_miniupnpd=y
+CONFIG_PACKAGE_iptables-mod-tproxy=y
+CONFIG_PACKAGE_iptables-mod-extra=y
 #删除组件
 CONFIG_PACKAGE_autosamba=n
 #增加插件
@@ -27,6 +29,8 @@ CONFIG_PACKAGE_luci-app-turboacc=y
 CONFIG_PACKAGE_luci-app-autoreboot=y
 CONFIG_PACKAGE_luci-app-wol=y
 CONFIG_PACKAGE_luci-app-ddns=y
+CONFIG_PACKAGE_luci-app-firewall=y
+CONFIG_PACKAGE_luci-app-zerotier=y
 #删除插件
 CONFIG_PACKAGE_luci-app-v2ray-server=n
 CONFIG_PACKAGE_luci-i18n-v2ray-server-zh-cn=n
@@ -37,7 +41,6 @@ CONFIG_PACKAGE_luci-app-openclash=n
 CONFIG_PACKAGE_luci-app-samba4=n
 CONFIG_PACKAGE_luci-app-vlmcsd=n
 CONFIG_PACKAGE_luci-app-xlnetacc=n
-CONFIG_PACKAGE_luci-app-zerotier=n
 CONFIG_PACKAGE_luci-app-ipsec-vpnd=n
 CONFIG_PACKAGE_luci-app-adbyby-plus=n
 CONFIG_PACKAGE_luci-app-unblockmusic=n
