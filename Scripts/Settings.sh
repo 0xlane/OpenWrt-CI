@@ -32,9 +32,9 @@ echo " ╚═════╝ ╚═╝     ╚══════╝╚═╝  �
 echo " ------------------------------------------------------------- " >> package/base-files/files/etc/banner
 echo " %D %C ${build_date} by moyulong                               " >> package/base-files/files/etc/banner
 echo " ------------------------------------------------------------- " >> package/base-files/files/etc/banner
-echo "   REPO_URL: https://github.com/coolsnowwolf/lede              " >> package/base-files/files/etc/banner
-echo "   REPO_BRANCH: 5.10.167                                       " >> package/base-files/files/etc/banner
-echo "   COMMIT_HASH:                                                " >> package/base-files/files/etc/banner
-echo "   DEVICE_NAME: Redmi Ax6                                      " >> package/base-files/files/etc/banner
+echo "   源码：${{env.OWRT_SOURCE}}             " >> package/base-files/files/etc/banner
+echo "   版本: 5.10.167                                       " >> package/base-files/files/etc/banner
+echo "   平台：${{env.OWRT_TARGET}}                                                " >> package/base-files/files/etc/banner
+echo "   设备：${{env.OWRT_TYPE}}                                      " >> package/base-files/files/etc/banner
 echo " ------------------------------------------------------------- " >> package/base-files/files/etc/banner
 echo "                                                               " >> package/base-files/files/etc/banner
