@@ -18,3 +18,23 @@ if [[ $OWRT_URL == *"lede"* ]] ; then
   #修改默认时间格式
   sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S %A")/g' $(find ./package/*/autocore/files/ -type f -name "index.htm")
 fi
+
+# Modify default banner
+echo 'Modify default banner...'
+build_date=$(date +"%Y-%m-%d %H:%M:%S")
+echo "                                                               " >  package/base-files/files/etc/banner
+echo " ██████╗ ██████╗ ███████╗███╗   ██╗██╗    ██╗██████╗ ████████╗ " >> package/base-files/files/etc/banner
+echo "██╔═══██╗██╔══██╗██╔════╝████╗  ██║██║    ██║██╔══██╗╚══██╔══╝ " >> package/base-files/files/etc/banner
+echo "██║   ██║██████╔╝█████╗  ██╔██╗ ██║██║ █╗ ██║██████╔╝   ██║    " >> package/base-files/files/etc/banner
+echo "██║   ██║██╔═══╝ ██╔══╝  ██║╚██╗██║██║███╗██║██╔══██╗   ██║    " >> package/base-files/files/etc/banner
+echo "╚██████╔╝██║     ███████╗██║ ╚████║╚███╔███╔╝██║  ██║   ██║    " >> package/base-files/files/etc/banner
+echo " ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═══╝ ╚══╝╚══╝ ╚═╝  ╚═╝   ╚═╝    " >> package/base-files/files/etc/banner
+echo " ------------------------------------------------------------- " >> package/base-files/files/etc/banner
+echo " %D %C ${build_date} by moyulong                               " >> package/base-files/files/etc/banner
+echo " ------------------------------------------------------------- " >> package/base-files/files/etc/banner
+echo "   REPO_URL: https://github.com/coolsnowwolf/lede              " >> package/base-files/files/etc/banner
+echo "   REPO_BRANCH: 5.10.167                                       " >> package/base-files/files/etc/banner
+echo "   COMMIT_HASH:                                                " >> package/base-files/files/etc/banner
+echo "   DEVICE_NAME: Redmi Ax6                                      " >> package/base-files/files/etc/banner
+echo " ------------------------------------------------------------- " >> package/base-files/files/etc/banner
+echo "                                                               " >> package/base-files/files/etc/banner
