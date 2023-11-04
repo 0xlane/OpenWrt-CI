@@ -32,6 +32,7 @@ env:
   OWRT_URL: ${{inputs.OWRT_URL}}
   OWRT_PW: ${{inputs.OWRT_PW}}
   OWRT_IP: ${{inputs.OWRT_IP}}
+  USE_CACHEWRTBUILD: true
 
 jobs:
   owrt_core:
@@ -126,7 +127,13 @@ jobs:
 
           $GITHUB_WORKSPACE/Scripts/Extras.sh
 
-          make defconfig
+      - name: Cache 缓存加速(7天内对应源码相同机型二次编译有效，每次只保留一个源码的缓存)
+        uses: stupidloud/cachewrtbuild@main
+        continue-on-error: true
+        if: env.USE_CACHEWRTBUILD == 'true'
+        with:
+          ccache: true
+          prefix: ${{ github.workspace }}/owrt
 
       - name: 清理Toolchain
         run: |
@@ -137,7 +144,7 @@ jobs:
       - name: 下载编译依赖
         run: |
           cd ./owrt
-
+          make defconfig
           make download -j$(nproc)
 
       - name: 编译固件
