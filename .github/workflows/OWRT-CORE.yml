@@ -99,7 +99,7 @@ jobs:
         run: |
           cd ./owrt
           echo 'src-git smpackage https://github.com/kenzok8/small-package' >> feeds.conf.default
-          echo 'src-git smallhttps://github.com/rmoyulong/helloworld' >>feeds.conf.default
+          echo 'src-git mo_ssr https://github.com/rmoyulong/helloworld' >>feeds.conf.default
 
       - name: 更新订阅源
         run: |
