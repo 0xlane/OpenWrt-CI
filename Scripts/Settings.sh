@@ -45,6 +45,7 @@ echo " %D %C ${build_date} by moyulong                               " >> packag
 echo " ------------------------------------------------------------- " >> package/base-files/files/etc/banner
 echo "   源码：${{env.OWRT_SOURCE}}             " >> package/base-files/files/etc/banner
 #echo "   版本: 5.10.176                                       " >> package/base-files/files/etc/banner
+
 echo "   平台：${{env.OWRT_TARGET}}                                                " >> package/base-files/files/etc/banner
 echo "   设备：${{env.OWRT_TYPE}}                                      " >> package/base-files/files/etc/banner
 echo " ------------------------------------------------------------- " >> package/base-files/files/etc/banner
