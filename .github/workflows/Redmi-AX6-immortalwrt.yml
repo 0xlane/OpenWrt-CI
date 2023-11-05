@@ -30,4 +30,4 @@ jobs:
       #默认源码
       OWRT_URL: https://github.com/immortalwrt/immortalwrt.git
       #自定义config
-      OWRT_CFG: Ax6-6.1-immortalwrt.config
+      OWRT_CFG: Ax6-5.15-immortalwrt.config
