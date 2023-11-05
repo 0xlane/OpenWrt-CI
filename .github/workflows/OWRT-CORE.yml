@@ -98,8 +98,7 @@ jobs:
       - name: 加载自定义订阅源
         run: |
           cd ./owrt
-          echo 'src-git kenzo https://github.com/kenzok8/openwrt-packages' >> feeds.conf.default
-          echo 'src-git mo_ssr https://github.com/rmoyulong/helloworld' >>feeds.conf.default
+          echo 'src-git mo_ssr https://github.com/rmoyulong/small-package' >>feeds.conf.default
 
       - name: 更新订阅源
         run: |
