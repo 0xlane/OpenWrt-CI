@@ -44,8 +44,12 @@ echo " ------------------------------------------------------------- " >> packag
 echo " %D %C ${build_date} by moyulong                               " >> package/base-files/files/etc/banner
 echo " ------------------------------------------------------------- " >> package/base-files/files/etc/banner
 echo "   源码：${{env.OWRT_SOURCE}}             " >> package/base-files/files/etc/banner
+if [[ $OWRT_URL != *"lede"* ]] ; then
+#echo "   版本: 6.1.x                                       " >> package/base-files/files/etc/banner
+fi
+if [[ $OWRT_URL == *"lede"* ]] ; then
 #echo "   版本: 5.10.176                                       " >> package/base-files/files/etc/banner
-
+fi
 echo "   平台：${{env.OWRT_TARGET}}                                                " >> package/base-files/files/etc/banner
 echo "   设备：${{env.OWRT_TYPE}}                                      " >> package/base-files/files/etc/banner
 echo " ------------------------------------------------------------- " >> package/base-files/files/etc/banner
