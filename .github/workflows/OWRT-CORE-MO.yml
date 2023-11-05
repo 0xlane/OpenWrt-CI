@@ -1,5 +1,5 @@
 #云编译公用核心
-name: OWRT-CORE
+name: OWRT-CORE-MO
 
 on:
   #公用核心标识
