@@ -20,6 +20,13 @@ if [[ $OWRT_URL == *"lede"* ]] ; then
   sed -i 's/os.date()/os.date("%Y-%m-%d %H:%M:%S %A")/g' $(find ./package/*/autocore/files/ -type f -name "index.htm")
 fi
 
+# Modify default NTP server
+echo 'Modify default NTP server...'
+sed -i 's/cn.ntp.org.cn/pool.ntp.org/' package/emortal/default-settings/files/99-default-settings-chinese
+sed -i 's/ntp.ntsc.ac.cn/cn.ntp.org.cn/' package/emortal/default-settings/files/99-default-settings-chinese
+sed -i 's/ntp.tencent.com/ntp.ntsc.ac.cn/' package/emortal/default-settings/files/99-default-settings-chinese
+sed -i 's/ntp1.aliyun.com/ntp.aliyun.com/' package/emortal/default-settings/files/99-default-settings-chinese
+
 #5.更换lede源码中自带argon主题
 #git clone --depth 1来只克隆最近一次提交的仓库。
 [ -e package/lean/default-settings/files/zzz-default-settings ] && rm -rf feeds/luci/themes/luci-theme-argon && git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git feeds/luci/themes/luci-theme-argon
