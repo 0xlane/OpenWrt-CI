@@ -26,7 +26,7 @@ on:
       OWRT_CFG:
         required: true
         type: string
-      OWRT_CFG:
+      OWRT_BRANCH:
         required: true
         type: string
 env:
