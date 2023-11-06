@@ -143,11 +143,11 @@ jobs:
           make defconfig
 
       #如果切换如果要更换架构就需要开启本流程【比如x64切换ipq807x】
-      #- name: 清理Toolchain
-        # run: |
-         #  cd openwrt
+      - name: 清理Toolchain
+        run: |
+           cd openwrt
 
-           #make dirclean
+           make dirclean
           
       #配合env USE_CACHEWRTBUILD: true使用的老Cache 已经废弃
       #- name: Cache 缓存加速(7天内对应源码相同机型二次编译有效，每次只保留一个源码的缓存)
