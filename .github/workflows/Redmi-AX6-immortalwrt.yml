@@ -32,4 +32,4 @@ jobs:
       #源码版本
       OWRT_BRANCH: master
       #自定义config
-      OWRT_CFG: Ax6-6.1-immortalwrt.config
+      OWRT_CFG: 6.1.x.config
