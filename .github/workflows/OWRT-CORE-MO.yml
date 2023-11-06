@@ -38,6 +38,7 @@ env:
   OWRT_PW: ${{inputs.OWRT_PW}}
   OWRT_IP: ${{inputs.OWRT_IP}}
   OWRT_CFG: ${{inputs.OWRT_CFG}}
+  OWRT_BRANCH: ${{inputs.OWRT_BRANCH}}
   USE_CACHEWRTBUILD: true
 
 jobs:
@@ -86,7 +87,7 @@ jobs:
 
       - name: 克隆源码库
         run: |
-          git clone $OWRT_URL ./owrt
+          git clone $OWRT_URL -b $OWRT_BRANCH ./owrt
       
       - name: 加载自定义订阅源
         run: |
