@@ -127,11 +127,11 @@ jobs:
           $GITHUB_WORKSPACE/Scripts/Extras.sh
           make defconfig
 
-      - name: 清理Toolchain
-        run: |
-          cd ./owrt
+      #- name: 清理Toolchain
+        # run: |
+         #  cd ./owrt
 
-          make dirclean
+           #make dirclean
           
       - name: Cache 缓存加速(7天内对应源码相同机型二次编译有效，每次只保留一个源码的缓存)
         uses: stupidloud/cachewrtbuild@main
