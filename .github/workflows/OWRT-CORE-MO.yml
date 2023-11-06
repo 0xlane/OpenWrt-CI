@@ -119,7 +119,8 @@ jobs:
           cat $GITHUB_WORKSPACE/Config/$OWRT_CFG >> .config
 
           $GITHUB_WORKSPACE/Scripts/Extras.sh
-          echo -e 'CONFIG_DEVEL=y\nCONFIG_CCACHE=y' >> .config; make defconfig
+          #echo -e 'CONFIG_DEVEL=y\nCONFIG_CCACHE=y' >> .config; make defconfig
+          make defconfig
 
       - name: 清理Toolchain
         run: |
