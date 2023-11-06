@@ -29,5 +29,7 @@ jobs:
       OWRT_IP: 192.168.31.1
       #默认源码
       OWRT_URL: https://github.com/immortalwrt/immortalwrt.git
+      #源码版本
+      OWRT_BRANCH: master
       #自定义config
       OWRT_CFG: Ax6-6.1-immortalwrt.config
