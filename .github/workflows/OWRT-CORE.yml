@@ -106,7 +106,7 @@ jobs:
         run: |
           cd openwrt
           echo 'src-git mo_ssr https://github.com/rmoyulong/small-package' >>feeds.conf.default
-		  echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
+          echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
 		  
       - name: 启动缓存[下次生效]
         uses: rmoyulong/cachewrtbuild@main
@@ -148,13 +148,13 @@ jobs:
 
            #make dirclean
           
-      - name: Cache 缓存加速(7天内对应源码相同机型二次编译有效，每次只保留一个源码的缓存)
-        uses: stupidloud/cachewrtbuild@main
-        continue-on-error: true
-        if: env.USE_CACHEWRTBUILD == 'true'
-        with:
-          ccache: true
-          prefix: ${{ github.workspace }}/openwrt
+      #- name: Cache 缓存加速(7天内对应源码相同机型二次编译有效，每次只保留一个源码的缓存)
+        #uses: stupidloud/cachewrtbuild@main
+        #continue-on-error: true
+        #if: env.USE_CACHEWRTBUILD == 'true'
+        #with:
+          #ccache: true
+          #prefix: ${{ github.workspace }}/openwrt
 
       - name: 下载编译依赖
         run: |
