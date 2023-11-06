@@ -116,7 +116,8 @@ jobs:
           cd ./owrt
 
           rm -rf ./tmp* ./.config*
-          cat $GITHUB_WORKSPACE/Config/$OWRT_CFG >> .config
+          #cat $GITHUB_WORKSPACE/Config/$OWRT_CFG >> .config
+          [ -e $GITHUB_WORKSPACE/Config/$CONFIG_FILE ] && mv $GITHUB_WORKSPACE/Config/$CONFIG_FILE .config
 
           $GITHUB_WORKSPACE/Scripts/Extras.sh
           #echo -e 'CONFIG_DEVEL=y\nCONFIG_CCACHE=y' >> .config; make defconfig
