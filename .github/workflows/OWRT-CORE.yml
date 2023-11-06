@@ -107,7 +107,7 @@ jobs:
           cd openwrt
           echo 'src-git mo_ssr https://github.com/rmoyulong/small-package' >>feeds.conf.default
           echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
-		  
+	  
       - name: 启动缓存[下次生效]
         uses: rmoyulong/cachewrtbuild@main
         with:
