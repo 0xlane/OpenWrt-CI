@@ -138,7 +138,7 @@ jobs:
           #echo -e 'CONFIG_DEVEL=y\nCONFIG_CCACHE=y' >> .config; make defconfig
           make defconfig
 
-       - name: 清理Toolchain
+      - name: 清理Toolchain
          run: |
            cd openwrt
 
