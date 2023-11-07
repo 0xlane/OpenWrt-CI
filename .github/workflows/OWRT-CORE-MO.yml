@@ -94,7 +94,7 @@ jobs:
           #git clone $OWRT_URL -b $REPO_BRANCH openwrt
           git clone $OWRT_URL openwrt
           ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
-          [ -e $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt ] && echo "DEVICE_NAME=$(grep '^CONFIG_TARGET_.*_.*_DEVICE_.*=y' $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt | sed -r 's/.*DEVICE_(.*)=y/\1/')" >> $GITHUB_ENV
+          [ -e $GITHUB_WORKSPACE/Config/OWRT_CFG ] && echo "DEVICE_NAME=$(grep '^CONFIG_TARGET_.*_.*_DEVICE_.*=y' $GITHUB_WORKSPACE/Config/$OWRT_CFG | sed -r 's/.*DEVICE_(.*)=y/\1/')" >> $GITHUB_ENV
       
       - name: 加载自定义订阅源
         run: |
