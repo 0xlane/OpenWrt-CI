@@ -154,7 +154,7 @@ jobs:
 
           rm -rf ./tmp* ./.config*
           #make dirclean
-          [ -e $GITHUB_WORKSPACE/$CONFIG_FILE ] && mv $GITHUB_WORKSPACE/$CONFIG_FILE .config
+          [ -e $GITHUB_WORKSPACE/Config/$OWRT_CFG ] && mv $GITHUB_WORKSPACE/Config/$OWRT_CFG .config
           make defconfig
 
       - name: 下载编译依赖
