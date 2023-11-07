@@ -138,14 +138,6 @@ jobs:
           #echo -e 'CONFIG_DEVEL=y\nCONFIG_CCACHE=y' >> .config; make defconfig
           make defconfig
 
-      #如果切换如果要更换架构就需要开启本流程【比如x64切换ipq807x】
-      - name: 清理Toolchain
-        run: |
-           cd openwrt
-
-           make dirclean
-          
-
       - name: 下载编译依赖
         run: |
           cd openwrt
