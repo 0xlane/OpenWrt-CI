@@ -149,7 +149,7 @@ jobs:
 
       - name: 自定义设置
         run: |
-          [ -e files ] && mv files openwrt/files
+          #[ -e files ] && mv files openwrt/files
           cd openwrt
 
           rm -rf ./tmp* ./.config*
