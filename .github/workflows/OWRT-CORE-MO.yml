@@ -42,7 +42,7 @@ env:
   #USE_CACHEWRTBUILD: true
 
 jobs:
-  owrt_core:
+  owrt_core_mo:
     runs-on: ubuntu-latest
     steps:
       - name: 项目检查
