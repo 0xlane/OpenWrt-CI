@@ -160,8 +160,8 @@ jobs:
       - name: 下载编译依赖
         working-directory: ./openwrt
         run: |
-          #make download -j$(nproc)
-          make download -j8
+          make download -j$(nproc)
+          #make download -j8
           find dl -size -1024c -exec ls -l {} \;
           find dl -size -1024c -exec rm -f {} \;
 
