@@ -23,6 +23,12 @@ on:
       OWRT_IP:
         required: true
         type: string
+      OWRT_CFG:
+        required: true
+        type: string
+      OWRT_BRANCH:
+        required: true
+        type: string
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
@@ -32,6 +38,8 @@ env:
   OWRT_URL: ${{inputs.OWRT_URL}}
   OWRT_PW: ${{inputs.OWRT_PW}}
   OWRT_IP: ${{inputs.OWRT_IP}}
+  OWRT_BRANCH: ${{inputs.OWRT_BRANCH}}
+  OWRT_CFG: ${{inputs.OWRT_CFG}}  
   #USE_CACHEWRTBUILD: true
 
 jobs:
