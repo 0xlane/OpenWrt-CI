@@ -39,7 +39,7 @@ env:
   OWRT_IP: ${{inputs.OWRT_IP}}
   OWRT_CFG: ${{inputs.OWRT_CFG}}
   OWRT_BRANCH: ${{inputs.OWRT_BRANCH}}
-  USE_CACHEWRTBUILD: true
+  #USE_CACHEWRTBUILD: true
 
 jobs:
   owrt_core:
@@ -63,6 +63,8 @@ jobs:
           sudo -E apt -yqq clean
           sudo -E systemctl daemon-reload
           sudo -E timedatectl set-timezone "Asia/Shanghai"
+          sudo mkdir -p /workdir
+          sudo chown $USER:$GROUPS /workdir
 
       - name: 初始化变量
         run: |
@@ -86,24 +88,37 @@ jobs:
           chmod +x ./*.sh
 
       - name: 克隆源码库
+        working-directory: /workdir
         run: |
-          git clone $OWRT_URL -b $OWRT_BRANCH ./owrt
+          df -hT $PWD
+          #git clone $OWRT_URL -b $REPO_BRANCH openwrt
+          git clone $OWRT_URL openwrt
+          ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+          [ -e $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt ] && echo "DEVICE_NAME=$(grep '^CONFIG_TARGET_.*_.*_DEVICE_.*=y' $GITHUB_WORKSPACE/Config/$OWRT_TARGET.txt | sed -r 's/.*DEVICE_(.*)=y/\1/')" >> $GITHUB_ENV
       
       - name: 加载自定义订阅源
         run: |
-          cd ./owrt
+          cd openwrt
           echo 'src-git mo_ssr https://github.com/rmoyulong/small-package' >>feeds.conf.default
+          echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
+
+      - name: 启动缓存[下次生效]
+        uses: rmoyulong/cachewrtbuild@main
+        with:
+          ccache: 'true'
+          prefix: ${{ github.workspace }}/openwrt
+          mixkey: ${{ env.OWRT_URL }}/tree/${{ env.REPO_BRANCH }}?device=${{ env.DEVICE_NAME }}	
 
       - name: 更新订阅源
         run: |
-          cd ./owrt
+          cd openwrt
 
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
       - name: 自定义脚本
         run: |
-          cd ./owrt
+          cd openwrt
 
           $GITHUB_WORKSPACE/Scripts/Settings.sh
 
@@ -113,7 +128,7 @@ jobs:
 
       - name: 自定义设置
         run: |
-          cd ./owrt
+          cd openwrt
 
           rm -rf ./tmp* ./.config*
           #cat $GITHUB_WORKSPACE/Config/$OWRT_CFG >> .config
@@ -123,28 +138,21 @@ jobs:
           #echo -e 'CONFIG_DEVEL=y\nCONFIG_CCACHE=y' >> .config; make defconfig
           make defconfig
 
-       #- name: 清理Toolchain
-         #run: |
-           #cd ./owrt
+       - name: 清理Toolchain
+         run: |
+           cd openwrt
 
-           #make dirclean
+           make dirclean
           
-      - name: Cache 缓存加速(7天内对应源码相同机型二次编译有效，每次只保留一个源码的缓存)
-        uses: stupidloud/cachewrtbuild@main
-        continue-on-error: true
-        if: env.USE_CACHEWRTBUILD == 'true'
-        with:
-          ccache: true
-          prefix: ${{ github.workspace }}/owrt
 
       - name: 下载编译依赖
         run: |
-          cd ./owrt
+          cd openwrt
           make download -j$(nproc)
 
       - name: 编译固件
         run: |
-          cd ./owrt
+          cd openwrt
 
           make -j$(nproc) || make -j1 V=s
 
@@ -156,7 +164,7 @@ jobs:
 
       - name: 整理固件
         run: |
-          cd ./owrt && mkdir ./upload
+          cd openwrt && mkdir ./upload
 
           rm -rf $(find ./bin/targets/ -iregex ".*\(json\|manifest\|buildinfo\|sha256sums\|packages\)$")
           cp -rf $(find ./bin/targets/ -type f -iname "*.*") ./upload/
@@ -170,7 +178,7 @@ jobs:
         uses: softprops/action-gh-release@master
         with:
           tag_name: ${{env.OWRT_TARGET}}_${{env.OWRT_SOURCE}}_${{env.OWRT_DATE}}
-          files: ./owrt/upload/*.*
+          files: openwrt/upload/*.*
           body: |
             这是个平台固件包，内含多个设备！
             请注意选择你需要的设备固件！
