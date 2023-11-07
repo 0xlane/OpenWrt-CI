@@ -142,30 +142,29 @@ jobs:
 
       - name: 自定义设置
         run: |
+          [ -e files ] && mv files openwrt/files
           cd openwrt
 
           rm -rf ./tmp* ./.config*
-          [ -e $GITHUB_WORKSPACE/Config/$OWRT_CFG ] && mv $GITHUB_WORKSPACE/Config/$OWRT_CFG .config
-
-          $GITHUB_WORKSPACE/Scripts/Extras.sh
+          make dirclean
+          [ -e $GITHUB_WORKSPACE/$CONFIG_FILE ] && mv $GITHUB_WORKSPACE/$CONFIG_FILE .config
           make defconfig
-          
+
       - name: 下载编译依赖
+        working-directory: ./openwrt
         run: |
-          cd openwrt
-          make download -j$(nproc)
+          #make download -j$(nproc)
+          make download -j8
+          find dl -size -1024c -exec ls -l {} \;
+          find dl -size -1024c -exec rm -f {} \;
 
       - name: 编译固件
-        run: |
-          cd openwrt
-
-          make -j$(nproc) || make -j1 V=s
-
-          echo "======================="
-          df -h
-          echo "======================="
-          du -h --max-depth=1
-          echo "======================="
+        working-directory: ./openwrt
+        run: |     
+          echo -e "$(nproc) thread compile"
+          make -j$(nproc) || make -j1 || make -j1 V=s
+          echo "status=success" >> $GITHUB_OUTPUT
+          echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV  
 
       - name: 整理固件
         run: |
