@@ -146,7 +146,7 @@ jobs:
           cd openwrt
 
           rm -rf ./tmp* ./.config*
-          make dirclean
+          #make dirclean
           [ -e $GITHUB_WORKSPACE/$CONFIG_FILE ] && mv $GITHUB_WORKSPACE/$CONFIG_FILE .config
           make defconfig
 
