@@ -96,10 +96,31 @@ jobs:
           ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
           [ -e $GITHUB_WORKSPACE/Config/OWRT_CFG ] && echo "DEVICE_NAME=$(grep '^CONFIG_TARGET_.*_.*_DEVICE_.*=y' $GITHUB_WORKSPACE/Config/$OWRT_CFG | sed -r 's/.*DEVICE_(.*)=y/\1/')" >> $GITHUB_ENV
       
-      - name: 加载自定义订阅源
+      - name: 加载订阅源
         run: |
           cd openwrt
           echo 'src-git mo_ssr https://github.com/rmoyulong/small-package' >>feeds.conf.default
+          echo 'src-link custom openwrt/custom-feed' >> feeds.conf.default
+          
+          mkdir -p custom-feed/applications
+
+          for i in "ipv6-helper"; do \
+            svn checkout "https://github.com/coolsnowwolf/lede/trunk/package/lean/$i" "custom-feed/applications/$i"; \
+          done
+
+          for i in "luci-app-vlmcsd"; do \
+            svn checkout "https://github.com/coolsnowwolf/luci/trunk/applications/$i" "custom-feed/applications/$i"; \
+          done
+          sed -i 's/include ..\/..\/luci.mk/include $(TOPDIR)\/feeds\/luci\/luci.mk/' custom-feed/applications/luci-app-vlmcsd/Makefile
+
+          for i in "vlmcsd"; do \
+            svn checkout "https://github.com/coolsnowwolf/packages/trunk/net/$i" "custom-feed/applications/$i"; \
+          done
+
+          for i in "luci-app-autoreboot"; do \
+            svn checkout "https://github.com/rmoyulong/small-package/trunk/$i" "custom-feed/applications/$i"; \
+          done
+          
           echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
       - name: 启动缓存[第二次起生效]
