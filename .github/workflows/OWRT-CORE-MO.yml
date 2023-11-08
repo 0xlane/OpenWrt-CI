@@ -95,6 +95,7 @@ jobs:
         working-directory: /workdir
         run: |
           df -hT $PWD
+          echo $OWRT_URL
           #git clone $OWRT_URL -b $OWRT_BRANCH openwrt
           git clone $OWRT_URL openwrt
           ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
