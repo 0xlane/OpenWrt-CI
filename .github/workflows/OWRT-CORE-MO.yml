@@ -92,12 +92,12 @@ jobs:
           chmod +x ./*.sh
 
       - name: 克隆源码库
-        working-directory: /mo_workdir
+        working-directory: /workdir
         run: |
           df -hT $PWD
           git clone $OWRT_URL -b $OWRT_BRANCH openwrt
           #git clone $OWRT_URL openwrt
-          ln -sf /mo_workdir/openwrt $GITHUB_WORKSPACE/openwrt
+          ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
           [ -e $GITHUB_WORKSPACE/Config/OWRT_CFG ] && echo "DEVICE_NAME=$(grep '^CONFIG_TARGET_.*_.*_DEVICE_.*=y' $GITHUB_WORKSPACE/Config/$OWRT_CFG | sed -r 's/.*DEVICE_(.*)=y/\1/')" >> $GITHUB_ENV
       
       - name: 加载订阅源
