@@ -32,6 +32,6 @@ jobs:
       #源码版本
       OWRT_BRANCH: master
       #自定义config
-      OWRT_CFG: Ax6-6.1-openwrt.config      
+      OWRT_CFG: AX6-imoutowrt.config      
       #设备类型
       OWRT_TYPE: 红米AX6
