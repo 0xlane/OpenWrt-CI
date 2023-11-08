@@ -32,6 +32,11 @@ sed -i 's/luci-theme-bootstrap/luci-theme-material/g' feeds/luci/collections/luc
 sed -i 's/luci-theme-argon/luci-theme-material/g' feeds/luci/collections/luci/Makefile
 sed -i 's/luci-theme-design/luci-theme-material/g' feeds/luci/collections/luci/Makefile
 
+#固件版本号添加个人标识和日期
+[ -e package/lean/default-settings/files/zzz-default-settings ] && sed -i "s/DISTRIB_DESCRIPTION='.*OpenWrt '/DISTRIB_DESCRIPTION='莫稼麟($(TZ=UTC-8 date +%Y.%m.%d))@OpenWrt '/g" package/lean/default-settings/files/zzz-default-settings
+#[ ! -e package/lean/default-settings/files/zzz-default-settings ] && sed -i "/DISTRIB_DESCRIPTION='*'/d" package/base-files/files/etc/openwrt_release
+[ ! -e package/lean/default-settings/files/zzz-default-settings ] && echo "DISTRIB_DESCRIPTION='莫稼麟($(TZ=UTC-8 date +%Y.%m.%d))@lean '" >> package/base-files/files/etc/openwrt_release
+
 # Modify default banner
 echo 'Modify default banner...'
 build_date=$(date +"%Y-%m-%d %H:%M:%S")
