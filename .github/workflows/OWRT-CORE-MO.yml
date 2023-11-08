@@ -44,10 +44,10 @@ env:
   OWRT_BRANCH: ${{inputs.OWRT_BRANCH}}
   OWRT_TYPE: ${{inputs.OWRT_TYPE}}  
   #USE_CACHEWRTBUILD: true
-
+  
 jobs:
   owrt_core_mo:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: 项目检查
         uses: actions/checkout@main
@@ -68,7 +68,7 @@ jobs:
           sudo -E systemctl daemon-reload
           sudo -E timedatectl set-timezone "Asia/Shanghai"
           sudo mkdir -p /workdir
-          sudo chown $USER:$GROUPS /workdir   
+          sudo chown $USER:$GROUPS /workdir          
 
       - name: 初始化变量
         run: |
@@ -82,7 +82,6 @@ jobs:
           echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
           echo "OWRT_PW=$OWRT_PW" >> $GITHUB_ENV
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
-          echo "OWRT_CFG=$OWRT_CFG" >> $GITHUB_ENV
 
       - name: 检查脚本
         run: |
@@ -95,13 +94,12 @@ jobs:
         working-directory: /workdir
         run: |
           df -hT $PWD
-          echo $OWRT_URL
-          #git clone $OWRT_URL -b $OWRT_BRANCH openwrt
+          #git clone $OWRT_URL -b $REPO_BRANCH openwrt
           git clone $OWRT_URL openwrt
           ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
-          [ -e $GITHUB_WORKSPACE/Config/OWRT_CFG ] && echo "DEVICE_NAME=$(grep '^CONFIG_TARGET_.*_.*_DEVICE_.*=y' $GITHUB_WORKSPACE/Config/$OWRT_CFG | sed -r 's/.*DEVICE_(.*)=y/\1/')" >> $GITHUB_ENV
+          [ -e $GITHUB_WORKSPACE/Config/$OWRT_CFG ] && echo "DEVICE_NAME=$(grep '^CONFIG_TARGET_.*_.*_DEVICE_.*=y' $GITHUB_WORKSPACE/Config/$OWRT_CFG | sed -r 's/.*DEVICE_(.*)=y/\1/')" >> $GITHUB_ENV
       
-      - name: 加载订阅源
+      - name: 加载自定义订阅源
         run: |
           cd openwrt
           echo 'src-git mo_ssr https://github.com/rmoyulong/small-package' >>feeds.conf.default
@@ -112,7 +110,7 @@ jobs:
         with:
           ccache: 'true'
           prefix: ${{ github.workspace }}/openwrt
-          mixkey: ${{ env.OWRT_URL }}/tree/${{ env.REPO_BRANCH }}?device=${{ env.DEVICE_NAME }}	
+          mixkey: ${{ env.OWRT_URL }}/tree/${{ env.REPO_BRANCH }}?device=${{ env.DEVICE_NAME }}		  
 
       - name: 更新订阅源
         run: |
@@ -144,9 +142,8 @@ jobs:
       - name: 下载编译依赖
         working-directory: ./openwrt
         run: |
-          #make download -j$(nproc)
+          make download -j$(nproc)
           #make download -j8
-          make -j16 download
           find dl -size -1024c -exec ls -l {} \;
           find dl -size -1024c -exec rm -f {} \;
 
