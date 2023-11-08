@@ -2,11 +2,14 @@
 name: Redmi-AX6-immortalwrt
 
 on:
-  #自动编译：每天早上4点
-  #schedule:
-    #- cron: 0 20 * * *
-  #手动编译
+  repository_dispatch:
+    types: [Source Code Update immortalwrt]
   workflow_dispatch:
+    inputs:
+      ssh:
+        description: 'SSH connection to Actions'
+        required: false
+        default: 'false'
 
 #CI权限
 permissions: write-all
