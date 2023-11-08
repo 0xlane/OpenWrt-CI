@@ -29,6 +29,9 @@ on:
       OWRT_BRANCH:
         required: true
         type: string
+      OWRT_TYPE:
+        required: true
+        type: string        
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   OWRT_TARGET: ${{inputs.OWRT_TARGET}}
@@ -39,6 +42,7 @@ env:
   OWRT_IP: ${{inputs.OWRT_IP}}
   OWRT_CFG: ${{inputs.OWRT_CFG}}
   OWRT_BRANCH: ${{inputs.OWRT_BRANCH}}
+  OWRT_TYPE: ${{inputs.OWRT_TYPE}}  
   #USE_CACHEWRTBUILD: true
 
 jobs:
@@ -70,7 +74,7 @@ jobs:
         run: |
           export OWRT_DATE=$(TZ=UTC-8 date +"%y.%m.%d_%H.%M.%S")
           export OWRT_SOURCE=$(echo $OWRT_URL | cut -d '/' -f 5-)
-          export OWRT_TYPE="cortex-a53"
+          #export OWRT_TYPE="cortex-a53"
 
           echo "OWRT_SOURCE=$OWRT_SOURCE" >> $GITHUB_ENV
           echo "OWRT_TARGET=$OWRT_TARGET" >> $GITHUB_ENV

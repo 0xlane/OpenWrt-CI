@@ -2,14 +2,11 @@
 name: Redmi-AX6-immortalwrt
 
 on:
-  repository_dispatch:
-    types: [Source Code Update immortalwrt]
+  #自动编译：每天早上4点
+  #schedule:
+    #- cron: 0 20 * * *
+  #手动编译
   workflow_dispatch:
-    inputs:
-      ssh:
-        description: 'SSH connection to Actions'
-        required: false
-        default: 'false'
 
 #CI权限
 permissions: write-all
@@ -35,4 +32,6 @@ jobs:
       #源码版本
       OWRT_BRANCH: master
       #自定义config
-      OWRT_CFG: Ax6-6.1-openwrt.config
+      OWRT_CFG: Ax6-6.1-openwrt.config      
+      #设备类型
+      OWRT_TYPE: 红米AX6

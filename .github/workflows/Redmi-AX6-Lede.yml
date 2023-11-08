@@ -33,3 +33,6 @@ jobs:
       OWRT_BRANCH: master
       #自定义config
       OWRT_CFG: redmi_ax6.config
+      #设备类型
+      OWRT_TYPE: 红米AX6
+      
