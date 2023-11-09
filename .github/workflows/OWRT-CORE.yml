@@ -101,7 +101,7 @@ jobs:
           df -hT $PWD
           #git clone --depth 1 $OWRT_URL -b $REPO_BRANCH openwrt
           git clone $OWRT_URL openwrt
-          ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+          ln -sf /workdir_diy/openwrt $GITHUB_WORKSPACE/openwrt
           [ -e $GITHUB_WORKSPACE/$CONFIG_FILE ] && echo "DEVICE_NAME=$(grep '^CONFIG_TARGET_.*_.*_DEVICE_.*=y' $GITHUB_WORKSPACE/$CONFIG_FILE | sed -r 's/.*DEVICE_(.*)=y/\1/')" >> $GITHUB_ENV
           
           # 2023-06-16 临时处理，回滚代码，等无线问题解决
