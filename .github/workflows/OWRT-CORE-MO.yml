@@ -133,7 +133,7 @@ jobs:
 
       - name: 自定义设置
         run: |
-          #[ -e files ] && mv files open_wrt/files
+          [ -e files ] && mv files open_wrt/files
           cd open_wrt
 
           rm -rf ./tmp* ./.config*

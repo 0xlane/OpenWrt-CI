@@ -145,7 +145,7 @@ jobs:
 
       - name: 自定义设置
         run: |
-          #[ -e files ] && mv files wrt/files
+          [ -e files ] && mv files wrt/files
           cd wrt
 
           rm -rf ./tmp* ./.config*
