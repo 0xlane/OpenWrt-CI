@@ -67,8 +67,8 @@ jobs:
           sudo -E apt -yqq clean
           sudo -E systemctl daemon-reload
           sudo -E timedatectl set-timezone "Asia/Shanghai"
-          sudo mkdir -p /workdir
-          sudo chown $USER:$GROUPS /workdir          
+          sudo mkdir -p /workdir_mo
+          sudo chown $USER:$GROUPS /workdir_mo          
 
       - name: 初始化变量
         run: |
@@ -91,18 +91,18 @@ jobs:
           chmod +x ./*.sh
 
       - name: 克隆源码库
-        working-directory: /workdir
+        working-directory: /workdir_mo
         run: |
           df -hT $PWD
-          #git clone $OWRT_URL -b $REPO_BRANCH openwrt
-          git clone $OWRT_URL openwrt
-          ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
+          #git clone $OWRT_URL -b $REPO_BRANCH wrt
+          git clone $OWRT_URL wrt
+          ln -sf /workdir_mo/wrt $GITHUB_WORKSPACE/wrt
           [ -e $GITHUB_WORKSPACE/Config/$OWRT_CFG ] && echo "DEVICE_NAME=$(grep '^CONFIG_TARGET_.*_.*_DEVICE_.*=y' $GITHUB_WORKSPACE/Config/$OWRT_CFG | sed -r 's/.*DEVICE_(.*)=y/\1/')" >> $GITHUB_ENV
       
       - name: 修复AX6驱动
         run: |
           if [ "$OWRT_TARGET" == "Redmi-AX6" ]; then
-            cd openwrt
+            cd wrt
             # 因AX6无线驱动问题，暂时维持源码版本在20230501
             git reset --hard 26f3634631244eedfbdfd61ea6cc3a2d7f5d896f 
 
@@ -115,7 +115,7 @@ jobs:
 
       - name: 加载自定义订阅源
         run: |
-          cd openwrt
+          cd wrt
           echo 'src-git mo_ssr https://github.com/rmoyulong/small-package' >>feeds.conf.default
           echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
@@ -123,19 +123,19 @@ jobs:
         uses: rmoyulong/cachewrtbuild@main
         with:
           ccache: 'true'
-          prefix: ${{ github.workspace }}/openwrt
+          prefix: ${{ github.workspace }}/wrt
           mixkey: ${{ env.OWRT_URL }}/tree/${{ env.REPO_BRANCH }}?device=${{ env.DEVICE_NAME }}		  
 
       - name: 更新订阅源
         run: |
-          cd openwrt
+          cd wrt
 
           ./scripts/feeds update -a
           ./scripts/feeds install -a
 
       - name: 自定义脚本
         run: |
-          cd openwrt
+          cd wrt
 
           $GITHUB_WORKSPACE/Scripts/Settings.sh
 
@@ -145,8 +145,8 @@ jobs:
 
       - name: 自定义设置
         run: |
-          #[ -e files ] && mv files openwrt/files
-          cd openwrt
+          #[ -e files ] && mv files wrt/files
+          cd wrt
 
           rm -rf ./tmp* ./.config*
           #make dirclean
@@ -154,7 +154,7 @@ jobs:
           make defconfig
 
       - name: 下载编译依赖
-        working-directory: ./openwrt
+        working-directory: ./wrt
         run: |
           make download -j$(nproc)
           #make download -j8
@@ -163,7 +163,7 @@ jobs:
           find dl -size -1024c -exec rm -f {} \;
 
       - name: 编译固件
-        working-directory: ./openwrt
+        working-directory: ./wrt
         run: |     
           echo -e "$(nproc) thread compile"
           make -j$(nproc) || make -j1 || make -j1 V=s
@@ -172,7 +172,7 @@ jobs:
 
       - name: 整理固件
         run: |
-          cd openwrt && mkdir ./upload
+          cd wrt && mkdir ./upload
 
           rm -rf $(find ./bin/targets/ -iregex ".*\(json\|manifest\|buildinfo\|sha256sums\|packages\)$")
           cp -rf $(find ./bin/targets/ -type f -iname "*.*") ./upload/
@@ -186,7 +186,7 @@ jobs:
         uses: softprops/action-gh-release@master
         with:
           tag_name: ${{env.OWRT_TARGET}}_${{env.OWRT_SOURCE}}_${{env.OWRT_DATE}}
-          files: openwrt/upload/*.*
+          files: wrt/upload/*.*
           body: |
             这是个平台固件包，内含多个设备！
             请注意选择你需要的设备固件！
