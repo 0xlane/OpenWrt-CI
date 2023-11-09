@@ -31,7 +31,10 @@ on:
         type: string
       OWRT_TYPE:
         required: true
-        type: string        
+        type: string
+      OWRT_LINUX:
+        required: true
+        type: string     
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   OWRT_TARGET: ${{inputs.OWRT_TARGET}}
@@ -42,7 +45,8 @@ env:
   OWRT_IP: ${{inputs.OWRT_IP}}
   OWRT_CFG: ${{inputs.OWRT_CFG}}
   OWRT_BRANCH: ${{inputs.OWRT_BRANCH}}
-  OWRT_TYPE: ${{inputs.OWRT_TYPE}}  
+  OWRT_TYPE: ${{inputs.OWRT_TYPE}}
+  OWRT_LINUX: ${{inputs.OWRT_LINUX}}  
   #USE_CACHEWRTBUILD: true
   
 jobs:
@@ -67,8 +71,8 @@ jobs:
           sudo -E apt -yqq clean
           sudo -E systemctl daemon-reload
           sudo -E timedatectl set-timezone "Asia/Shanghai"
-          sudo mkdir -p /workdir_diy
-          sudo chown $USER:$GROUPS /workdir_diy          
+          sudo mkdir -p /workdir
+          sudo chown $USER:$GROUPS /workdir          
 
       - name: 初始化变量
         run: |
@@ -82,6 +86,7 @@ jobs:
           echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
           echo "OWRT_PW=$OWRT_PW" >> $GITHUB_ENV
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
+          echo "OWRT_LINUX=$OWRT_LINUX" >> $GITHUB_ENV
 
       - name: 检查脚本
         run: |
@@ -91,16 +96,14 @@ jobs:
           chmod +x ./*.sh
 
       - name: 克隆源码库
-        working-directory: /workdir_diy
+        working-directory: /workdir
         run: |
           df -hT $PWD
-          git config --global user.email "git@github.com"
-          git config --global user.name "GitHub"    
-          git clone --depth 1 $OWRT_URL -b $OWRT_BRANCH open_wrt
-          #git clone $OWRT_URL open_wrt
-          ln -sf /workdir_diy/open_wrt $GITHUB_WORKSPACE/open_wrt
+          #git clone $OWRT_URL -b $REPO_BRANCH open_wrt
+          git clone $OWRT_URL open_wrt
+          ln -sf /workdir/open_wrt $GITHUB_WORKSPACE/open_wrt
           [ -e $GITHUB_WORKSPACE/Config/$OWRT_CFG ] && echo "DEVICE_NAME=$(grep '^CONFIG_TARGET_.*_.*_DEVICE_.*=y' $GITHUB_WORKSPACE/Config/$OWRT_CFG | sed -r 's/.*DEVICE_(.*)=y/\1/')" >> $GITHUB_ENV
-      
+
       - name: 加载自定义订阅源
         run: |
           cd open_wrt
@@ -133,7 +136,7 @@ jobs:
 
       - name: 自定义设置
         run: |
-          [ -e files ] && mv files open_wrt/files
+          #[ -e files ] && mv files open_wrt/files
           cd open_wrt
 
           rm -rf ./tmp* ./.config*
@@ -176,15 +179,15 @@ jobs:
           tag_name: ${{env.OWRT_TARGET}}_${{env.OWRT_SOURCE}}_${{env.OWRT_DATE}}
           files: open_wrt/upload/*.*
           body: |
-            这是个平台固件包，内含多个设备！
-            请注意选择你需要的设备固件！
-            不要问，更就完事了！
+            个人使用的AX6固件！
+            刷机有风险！刷前需谨慎！
 
             源码：${{env.OWRT_SOURCE}}
             平台：${{env.OWRT_TARGET}}
             设备：${{env.OWRT_TYPE}}
             密码：${{env.OWRT_PW}}
             地址：${{env.OWRT_IP}}
+            内核：${{env.OWRT_LINUX}}
 
       - name: 清理Releases
         uses: dev-drprasad/delete-older-releases@master

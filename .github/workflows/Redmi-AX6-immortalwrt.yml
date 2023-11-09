@@ -35,3 +35,4 @@ jobs:
       OWRT_CFG: AX6-imoutowrt.config      
       #设备类型
       OWRT_TYPE: 红米AX6
+      OWRT_LINUX: 6.1.x

@@ -31,7 +31,10 @@ on:
         type: string
       OWRT_TYPE:
         required: true
-        type: string        
+        type: string
+      OWRT_LINUX:
+        required: true
+        type: string     
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
   OWRT_TARGET: ${{inputs.OWRT_TARGET}}
@@ -42,7 +45,8 @@ env:
   OWRT_IP: ${{inputs.OWRT_IP}}
   OWRT_CFG: ${{inputs.OWRT_CFG}}
   OWRT_BRANCH: ${{inputs.OWRT_BRANCH}}
-  OWRT_TYPE: ${{inputs.OWRT_TYPE}}  
+  OWRT_TYPE: ${{inputs.OWRT_TYPE}}
+  OWRT_LINUX: ${{inputs.OWRT_LINUX}}  
   #USE_CACHEWRTBUILD: true
   
 jobs:
@@ -82,6 +86,7 @@ jobs:
           echo "OWRT_TYPE=$OWRT_TYPE" >> $GITHUB_ENV
           echo "OWRT_PW=$OWRT_PW" >> $GITHUB_ENV
           echo "OWRT_IP=$OWRT_IP" >> $GITHUB_ENV
+          echo "OWRT_LINUX=$OWRT_LINUX" >> $GITHUB_ENV
 
       - name: 检查脚本
         run: |
@@ -145,7 +150,7 @@ jobs:
 
       - name: 自定义设置
         run: |
-          [ -e files ] && mv files wrt/files
+          #[ -e files ] && mv files wrt/files
           cd wrt
 
           rm -rf ./tmp* ./.config*
@@ -188,15 +193,15 @@ jobs:
           tag_name: ${{env.OWRT_TARGET}}_${{env.OWRT_SOURCE}}_${{env.OWRT_DATE}}
           files: wrt/upload/*.*
           body: |
-            这是个平台固件包，内含多个设备！
-            请注意选择你需要的设备固件！
-            版本：5.15.x
+            个人使用的AX6固件！
+            刷机有风险！刷前需谨慎！
 
             源码：${{env.OWRT_SOURCE}}
             平台：${{env.OWRT_TARGET}}
             设备：${{env.OWRT_TYPE}}
             密码：${{env.OWRT_PW}}
             地址：${{env.OWRT_IP}}
+            内核：${{env.OWRT_LINUX}}
 
       - name: 清理Releases
         uses: dev-drprasad/delete-older-releases@master
