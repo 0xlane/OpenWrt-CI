@@ -1,5 +1,5 @@
 #云编译公用核心
-name: OWRT-CORE-MO
+name: OWRT-CORE
 
 on:
   #公用核心标识
@@ -50,7 +50,7 @@ env:
   #USE_CACHEWRTBUILD: true
   
 jobs:
-  owrt_core_mo:
+  owrt_core_source:
     runs-on: ubuntu-latest
     steps:
       - name: 项目检查
